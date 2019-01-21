@@ -20,10 +20,22 @@ export class ClienteService {
       .pipe(map(response => response as Cliente[]));
   }
 
+  getCliente(id): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.urlEndpoint}/${id}`);
+  }
+
   create(cliente: Cliente): Observable<Cliente> {
     //manera 2 de castear el response
     return this.http.post<Cliente>(this.urlEndpoint, cliente, {
       headers: this.httpHeaders
     });
+  }
+
+  update(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.urlEndpoint}/${cliente.id}`, cliente, { headers: this.httpHeaders })
+  }
+
+  delete(id: number): Observable<Cliente>{
+    return this.http.delete<Cliente>(`${this.urlEndpoint}/${id}`, { headers: this.httpHeaders })
   }
 }
