@@ -42,6 +42,9 @@ export class ClienteService {
     }). pipe(
       map((response: any) => response.cliente as Cliente),
       catchError(e => {
+        if(e.status === 400) {
+          return throwError(e)
+        }
         swal(e.error.mensaje, e.error.error, "error");
         console.error(e.error.mensaje);
         return throwError(e);
@@ -56,6 +59,9 @@ export class ClienteService {
       { headers: this.httpHeaders }
     ).pipe(
       catchError(e => {
+        if(e.status === 400) {
+          return throwError(e)
+        }
         swal(e.error.mensaje, e.error.error, "error");
         console.error(e.error.mensaje);
         return throwError(e);
